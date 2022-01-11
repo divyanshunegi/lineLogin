@@ -1,9 +1,11 @@
 import Head from 'next/head'
+import LineLoginButton from "../src/components/LineLoginButton";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-        <p>Test Tailwind CSS with LINE login </p>
+    <div className="flex flex-col min-h-screen bg-gray-700">
+        <h1 className="text-3xl font-extrabold place-self-center m-5">LINE Login Testing</h1>
+        <LineLoginButton />
     </div>
   )
 }
