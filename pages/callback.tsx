@@ -2,24 +2,26 @@ import LineLoginButton from "../src/components/LineLoginButton";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import LineLoginService from "../src/services/LineLogin.service";
+import {LineProfile} from "../src/types/LineTypes";
+import LoadingIndicator from "../src/components/LoadingIndicator";
 
 const Callback = () => {
 
-    type LineProfile = {
-        userId: string;
-        displayName: string;
-    }
-
     const [loginSuccess, setLoginSuccess] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
     const [error, setErrorMessage] = useState<string | null | string[]>(null)
     const [lineProfile, setLineProfile] = useState<LineProfile | null>(null)
     const router = useRouter()
 
     const getUserDetails = async (code: string | string[]) => {
-        console.log('getUserDetails', code)
         const lineLoginService = LineLoginService.getInstance()
         const userProfile = await lineLoginService?.getUserProfile(code as string)
-        setLineProfile(userProfile)
+        if(userProfile.error){
+            setErrorMessage(userProfile.error)
+        }else{
+            setLineProfile(userProfile)
+        }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -27,8 +29,8 @@ const Callback = () => {
            if(router?.query?.error){
                setErrorMessage(router.query.error)
            } else {
-               alert(router.query.code)
                setLoginSuccess(!!router?.query?.code)
+               setLoading(true)
                getUserDetails(router.query.code as string)
            }
        }
@@ -60,13 +62,14 @@ const Callback = () => {
                 <h1 className="text-2xl font-extrabold place-self-center mt-10 text-gray-700 p-3">Thanks for trying LINE Demo Login</h1>
                 <p className="place-self-center mt-1 text-gray-400 p-3 text-sm text-center">Here are the stats for the login callback</p>
                 <div className={"p-8"}>
-                    <StatusView success={true} />
-                    { error !== null ? <p className={"mt-5"}>Error: {error}</p> : null  }
-                    { lineProfile !== null ? <>
-                        <p className={"mt-5"}>Name: {lineProfile.displayName}</p>
-                        <p className={"mt-5"}>Id: {lineProfile.userId}</p>
-                    </> : null }
-
+                    {!loading ?                     <>
+                        <StatusView success={error === null} />
+                        { error !== null ? <p className={"mt-5"}>Error: {error}</p> : null  }
+                        { lineProfile !== null ? <>
+                            <p className={"mt-5"}>Name: {lineProfile.displayName}</p>
+                            <p className={"mt-5"}>Id: {lineProfile.userId}</p>
+                        </> : null }
+                    </> : <LoadingIndicator /> }
                 </div>
 
             </div>
