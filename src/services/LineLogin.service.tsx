@@ -17,7 +17,7 @@ export default class LineLoginService {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: "grant_type=authorization_code&code=" + code + "&redirect_uri=http://localhost:3000/callback&client_id=1656797734&client_secret=2f7b9c56777928fa61e185abf41196fb&code_verifier="
+            body: "grant_type=authorization_code&code=" + code + "&redirect_uri=https://line.divd.xyz/callback&client_id=1656797734&client_secret=2f7b9c56777928fa61e185abf41196fb&code_verifier="
         });
         return await rawResponse.json()
     }
