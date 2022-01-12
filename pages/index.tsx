@@ -3,9 +3,15 @@ import LineLoginButton from "../src/components/LineLoginButton";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-700">
-        <h1 className="text-3xl font-extrabold place-self-center m-5">LINE Login Testing</h1>
-        <LineLoginButton />
+    <div className="flex w-screen h-screen bg-white justify-items-center items-center">
+        <div className="h-96 w-96 bg-white shadow-2xl flex flex-col m-auto">
+            <h1 className="text-2xl font-extrabold place-self-center mt-10 text-gray-700">LINE Login Test</h1>
+            <p className="place-self-center mt-1 text-gray-400 p-3 text-sm text-center">Please try login on LINE using Desktop browser and Mobile Browser</p>
+            <div className={"m-auto"}>
+                <LineLoginButton />
+            </div>
+
+        </div>
     </div>
   )
 }
