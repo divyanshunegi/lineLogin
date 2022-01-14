@@ -15,12 +15,12 @@ const Callback = () => {
 
     const getUserDetails = async (code: string | string[]) => {
         const lineLoginService = LineLoginService.getInstance()
-        const userProfile = await lineLoginService?.getUserProfile(code as string)
-        if(userProfile.error){
-            setErrorMessage(userProfile.error)
-        }else{
-            setLineProfile(userProfile)
-        }
+        // const userProfile = await lineLoginService?.getUserProfile(code as string)
+        // if(userProfile.error){
+        //     setErrorMessage(userProfile.error)
+        // }else{
+        //     setLineProfile(userProfile)
+        // }
         setLoading(false)
     }
 
